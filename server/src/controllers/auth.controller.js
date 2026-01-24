@@ -67,11 +67,28 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
+    await User.findByIdAndUpdate(req.user._id, {
+        $unset: { refreshToken: 1 },
+    });
+    const options = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+    }
+    return res.status(201)
+        .cookie("accessToken", options)
+        .cookie("refreshToken", options)
+        .json(new ApiResponse(201, "User login successfully"));
 
 });
 
 const getUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id).select("+password");
+    if (!user) {
+        throw new ApiError(404, "User not found");
+    }
 
+    return res.status(201).json(new ApiResponse(201, "user Ready to fetch"))
 });
 export {
     registerUser,
