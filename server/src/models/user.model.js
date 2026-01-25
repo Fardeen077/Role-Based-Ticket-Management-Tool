@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 6,
-        select: true,
+        select: false,
     },
     role: {
         type: String,
@@ -41,9 +41,8 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 userSchema.pre("save", async function () {
-    if (!this.isModified("password")) return next();
+    if (!this.isModified("password")) return;
     this.password = await bcrypt.hash(this.password, 10)
-    next();
 });
 
 userSchema.methods.isPasswordCorrect = async function (password) {
@@ -60,7 +59,7 @@ userSchema.methods.generateAccessToken = function () {
     });
 }
 
-userSchema.method.generateRefreshToken = function () {
+userSchema.methods.generateRefreshToken = function () {
     return jwt.sign({
         _id: this._id,
     }, process.env.JWT_REFRESH_SECRET, {

@@ -1,7 +1,7 @@
-import { User } from "../models/user.model";
-import { ApiError } from "../utils/ApiError";
-import { ApiResponse } from "../utils/ApiResponse"
-import { asyncHandler } from "../utils/asyncHandler";
+import { User } from "../models/user.model.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js"
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -32,7 +32,10 @@ const registerUser = asyncHandler(async (req, res) => {
     return res.status(201)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
-        .json(new ApiResponse(201, "User created successfully"));
+        .json(new ApiResponse(201, {
+            user: await User.findById(user._id).select("-password -refreshToken")
+        }
+            , "User created successfully"));
 });
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -63,7 +66,9 @@ const loginUser = asyncHandler(async (req, res) => {
     return res.status(201)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
-        .json(new ApiResponse(201, "User login successfully"));
+        .json(new ApiResponse(201, {
+            user: await User.findById(user._id).select("-password -refreshToken")
+        }, "User login successfully"));
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
@@ -75,20 +80,20 @@ const logoutUser = asyncHandler(async (req, res) => {
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
     }
-    return res.status(201)
-        .cookie("accessToken", options)
-        .cookie("refreshToken", options)
-        .json(new ApiResponse(201, "User login successfully"));
+    return res.status(200)
+        .clearCookie("accessToken", options)
+        .clearCookie("refreshToken", options)
+        .json(new ApiResponse(200, {}, "User logged out successfully"));
 
 });
 
 const getUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id).select("+password");
+    const user = await User.findById(req.user._id);
     if (!user) {
         throw new ApiError(404, "User not found");
     }
 
-    return res.status(201).json(new ApiResponse(201, "user Ready to fetch"))
+    return res.status(201).json(new ApiResponse(201, user, "user Ready to fetch"))
 });
 export {
     registerUser,
