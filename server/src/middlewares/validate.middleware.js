@@ -15,4 +15,3 @@ export const validate = asyncHandler(async (req, res, next) => {
     }
     next();
 });
-
