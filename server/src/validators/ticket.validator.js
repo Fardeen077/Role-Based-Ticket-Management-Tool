@@ -14,7 +14,7 @@ export const createTicketValidator = [
 
 export const updateTicketValidator = [
     body("status")
-        .isIn(["OPEN", "IN_PROGRESS", "CLOSED"])
+        .isIn(["OPEN", "IN_PROGRESS", "RESOLVED", "CLOSED"])
         .withMessage("Invalid status"),
 
 ];
