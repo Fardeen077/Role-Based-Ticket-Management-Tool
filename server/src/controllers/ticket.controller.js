@@ -53,10 +53,10 @@ const assignedTicket = asyncHandler(async (req, res) => {
     const { ticketId } = req.params;
     const { agentId } = req.body;
 
-    console.log(req.params);
+    // console.log(req.params);
     
-    console.log("ticketId", ticketId);
-    console.log("agentId", agentId);
+    // console.log("ticketId", ticketId);
+    // console.log("agentId", agentId);
     
     const ticket = await Ticket.findById(ticketId);
     if (!ticket) {
