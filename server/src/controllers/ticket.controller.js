@@ -98,10 +98,10 @@ const getTicket = asyncHandler(async (req, res) => {
         .populate("createdBy", "name email")
         .populate("assignedTo", "name email");
 
-    return res.status(200).json(200, "Tickets fetched successfully", {
+    return res.status(200).json(new ApiResponse(200, {
         const: tickets.length,
         tickets
-    });
+    }, "Tickets fetched successfully"));
 });
 
 export {
