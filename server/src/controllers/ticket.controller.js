@@ -54,10 +54,10 @@ const assignedTicket = asyncHandler(async (req, res) => {
     const { agentId } = req.body;
 
     // console.log(req.params);
-    
+
     // console.log("ticketId", ticketId);
     // console.log("agentId", agentId);
-    
+
     const ticket = await Ticket.findById(ticketId);
     if (!ticket) {
         throw new ApiError(404, "Ticket not found")
@@ -91,6 +91,10 @@ const getTicket = asyncHandler(async (req, res) => {
         filter.createdBy = req.user._id;
     }
 
+    if (req.user.role === "AGENT") {
+        filter.assignedTo = req.user._id;
+    }
+
     if (req.query.status) {
         filter.status = req.query.status
     }
@@ -104,7 +108,7 @@ const getTicket = asyncHandler(async (req, res) => {
         .populate("assignedTo", "name email");
 
     return res.status(200).json(new ApiResponse(200, {
-        const: tickets.length,
+        count: tickets.length,
         tickets
     }, "Tickets fetched successfully"));
 });
