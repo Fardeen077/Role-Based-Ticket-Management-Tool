@@ -20,7 +20,7 @@ const getUserApi = async () => {
     return res.data
 }
 
-export default {
+export {
     registerApi,
     loginApi,
     logoutApi,

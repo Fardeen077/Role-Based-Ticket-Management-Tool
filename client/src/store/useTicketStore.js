@@ -5,7 +5,7 @@ import {
     getTicketApi,
     searchUserApi,
 } from "../api/ticketsApi"
-import create from "zustand";
+import { create } from 'zustand';
 
 const initialState = {
     tickets: [],

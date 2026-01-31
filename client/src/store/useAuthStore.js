@@ -4,7 +4,8 @@ import {
     logoutApi,
     getUserApi
 } from "../api/authApi";
-import create from "zustand";
+import { create } from 'zustand';
+import toast from "react-hot-toast";
 
 const useAuthStore = create((set) => ({
     isAuth: false,
@@ -19,10 +20,11 @@ const useAuthStore = create((set) => ({
             set({ isLoadind: false, authUser: res.data.user, isAuth: true })
             return res.data;
         } catch (error) {
-            set({ isLoadind: false, error: error?.response?.data?.message || "Register failed" })
+            const message = error?.response?.data?.message || "Register failed";
+            set({ isLoadind: false, error: message });
+            return null;
         }
     },
-
 
     login: async (userData) => {
         set({ isLoadind: true, error: null });

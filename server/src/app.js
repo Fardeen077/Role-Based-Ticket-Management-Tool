@@ -1,7 +1,13 @@
 import express from "express"
 import router from "./routers/index.js";
 import cookieParser from "cookie-parser";
+import cors from "cors"
 const app = express();
+
+app.use(cors({
+    origin: process.env.CORE_ORIGIN,
+    credentials: true,
+}));
 
 app.use(cookieParser());
 app.use(express.json({ limit: "150kb" })); // data limit
