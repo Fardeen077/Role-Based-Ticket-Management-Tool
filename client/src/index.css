@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 body{
-    background:#8d98a7;
+     height: 100vh;
+     @apply bg-[#f4f3ee]
 }
 
-/* #646E78 */
-/* #798390 */
+/* cart  999999 */
+/* navbar 4a4a4a */
