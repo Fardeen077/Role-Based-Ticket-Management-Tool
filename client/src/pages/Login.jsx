@@ -7,14 +7,19 @@ const Login = () => {
     const { login, isLoading } = useAuthStore();
     const [userData, setUserData] = useState({
         email: "",
-        password: "",
+        password: ""
     });
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-        await login(userData)
-        navigate("/");
-        toast.success("User Register");
+        e.preventDefault();
+        try {
+            await login(userData)
+            toast.success("User Login");
+            navigate("/");
+        } catch (error) {
+            toast.error("Login failed")
+        }
 
     }
     return (
@@ -27,7 +32,7 @@ const Login = () => {
 
             <input type="password"
                 placeholder="password"
-                value={userData.name}
+                value={userData.password}
                 onChange={(e) => setUserData({ ...userData, password: e.target.value })}
                 className="" />
 

@@ -5,7 +5,6 @@ import {
     getUserApi
 } from "../api/authApi";
 import { create } from 'zustand';
-import toast from "react-hot-toast";
 
 const useAuthStore = create((set) => ({
     isAuth: false,
@@ -33,7 +32,9 @@ const useAuthStore = create((set) => ({
             set({ isLoadind: false, authUser: res.data.user, isAuth: true })
             return res.data;
         } catch (error) {
-            set({ isLoadind: false, error: error?.response?.data?.message || "Login failed" })
+            const message = error?.response?.data?.message || "Login failed";
+            set({ isLoadind: false, error: message });
+            return null;
         }
     },
 
@@ -44,7 +45,9 @@ const useAuthStore = create((set) => ({
             set({ isLoadind: false, authUser: res.data, isAuth: true })
             return res.data;
         } catch (error) {
-            set({ isLoadind: false, error: error?.response?.data?.message || "Get User failed" })
+            const message = error?.response?.data?.message || "Fetched failed";
+            set({ isLoadind: false, error: message });
+            return null;
         }
     },
 
@@ -55,7 +58,9 @@ const useAuthStore = create((set) => ({
             set({ isLoadind: false, authUser: null, isAuth: false })
             return res.data;
         } catch (error) {
-            set({ isLoadind: false, error: error?.response?.data?.message || "Logout failed" })
+            const message = error?.response?.data?.message || "Logout failed";
+            set({ isLoadind: false, error: message });
+            return null;
         }
     },
 }));

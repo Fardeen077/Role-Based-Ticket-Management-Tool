@@ -38,10 +38,9 @@ const Register = () => {
 
             <input type="password"
                 placeholder="password"
-                value={userData.name}
+                value={userData.password}
                 onChange={(e) => setUserData({ ...userData, password: e.target.value })}
                 className="" />
-
             <button type="submit" disabled={isLoading}>
                 {isLoading ? (
                     <>
