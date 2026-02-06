@@ -2,7 +2,7 @@
 
 body{
      height: 100vh;
-     @apply bg-[#f4f3ee]
+     @apply bg-black
 }
 
 /* cart  999999 */

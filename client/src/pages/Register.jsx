@@ -34,12 +34,12 @@ const Register = () => {
     // bg-[#aaaaaa]
     return (
         <div className="min-h-screen flex items-center justify-center">
-            <div className="bg-white text-gray-800 w-80 rounded-2xl shadow-2xl">
+            <div className="bg-neutral-800 text-white w-80 rounded-2xl shadow-2xl">
 
             <form onSubmit={handleRegister} className="flex flex-col gap-6 p-6 w-full">
                 <div className="text-center mb-2">
                     <h1 className="text-2xl font-semibold">Create Account</h1>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm">
                         Sign up to get started
                     </p>
                 </div>
@@ -48,22 +48,22 @@ const Register = () => {
                     placeholder="Username"
                     value={userData.name}
                     onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-                    className="p-2 rounded border-2 border-gray-300 focus:outline-none focus:ring-0
-                   focus:border-gray-500" />
+                    className="p-2 rounded border-2 border-gray-500 focus:outline-none focus:ring-0
+                   focus:border-gray-300" />
 
                 <input type="email"
                     placeholder="Email"
                     value={userData.email}
                     onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-                    className="p-2 rounded border-2 border-gray-300 focus:outline-none focus:ring-0
-                    focus:border-gray-500" />
+                    className="p-2 rounded border-2 border-gray-500 focus:outline-none focus:ring-0
+                    focus:border-gray-300" />
 
                 <input type="password"
                     placeholder="password"
                     value={userData.password}
                     onChange={(e) => setUserData({ ...userData, password: e.target.value })}
-                    className="p-2 rounded border-2 border-gray-300 focus:outline-none focus:ring-0
-                    focus:border-gray-500" />
+                    className="p-2 rounded border-2 border-gray-500 focus:outline-none focus:ring-0
+                    focus:border-gray-300" />
 
                 <button type="submit" disabled={isLoading}
                     className="bg-black text-white p-2 rounded transition-colors cursor-pointer">
@@ -77,7 +77,7 @@ const Register = () => {
                     )}
                 </button>
 
-                <p className="text-sm text-center text-gray-600 mt-4">
+                <p className="text-sm text-center mt-4">
                     you have already account?{" "}
                     <Link
                         to="/login"

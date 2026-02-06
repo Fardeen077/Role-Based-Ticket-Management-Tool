@@ -31,11 +31,11 @@ const Login = () => {
     };
     return (
         <div className="min-h-screen flex items-center justify-center">
-            <div className="bg-white text-gray-800 w-80 rounded-2xl shadow-2xl">
+            <div className="bg-neutral-800 text-white w-80 rounded-2xl shadow-2xl">
                 <form onSubmit={handleLogin} className="flex flex-col w-full gap-6 p-6">
                     <div className="text-center mb-2">
                         <h1 className="text-2xl font-semibold">Welcome Back</h1>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm">
                             Please login to your account
                         </p>
                     </div>
@@ -43,15 +43,15 @@ const Login = () => {
                         placeholder="Email"
                         value={userData.email}
                         onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-                        className="p-2 rounded border-2 border-gray-300 focus:outline-none focus:ring-0
-                   focus:border-gray-500" />
+                        className="p-2 rounded border-2 border-gray-600 focus:outline-none focus:ring-0
+                   focus:border-gray-300" />
 
                     <input type="password"
                         placeholder="password"
                         value={userData.password}
                         onChange={(e) => setUserData({ ...userData, password: e.target.value })}
-                        className="p-2 rounded border-2 border-gray-300 focus:outline-none focus:ring-0
-                   focus:border-gray-500" />
+                        className="p-2 rounded border-2 border-gray-600 focus:outline-none focus:ring-0
+                   focus:border-gray-300" />
 
                     <button type="submit" disabled={isLoading} className="bg-black text-white p-2 rounded transition-colors cursor-pointer">
                         {isLoading ? (
@@ -64,7 +64,7 @@ const Login = () => {
                         )}
                     </button>
 
-                    <p className="text-sm text-center text-gray-600 mt-4">
+                    <p className="text-sm text-center mt-4">
                         you don't have account?{" "}
                         <Link
                             to="/register"
