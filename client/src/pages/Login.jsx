@@ -3,7 +3,7 @@ import useAuthStore from "../store/useAuthStore";
 import { Link, useNavigate } from "react-router-dom"
 import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { validateLogin } from "../validations/auth.validations";
+import { validateLogin } from "../validations/authValidations";
 
 const Login = () => {
     const { login, isLoading } = useAuthStore();

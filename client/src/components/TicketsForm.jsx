@@ -1,4 +1,34 @@
-const TicketsForm = ({ handleTicketForm }) => {
+import toast from "react-hot-toast";
+import useTicketStore from "../store/useTicketStore"
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { ticketsValidation } from "../validations/ticketsValidation";
+
+const TicketsForm = () => {
+  const navigate = useNavigate();
+  const { createTicket } = useTicketStore();
+  const [ticket, setTicket] = useState({
+    title: "",
+    description: "",
+    priority: "",
+  });
+
+  const handleTicketForm = async (e) => {
+    e.preventDefault();
+    const validation =  ticketsValidation(ticket);
+    if (!validation.ok) {
+      toast.error(validation.message);
+      return;
+    }
+    try {
+      await createTicket(ticket);
+      navigate("/");
+      toast.success("Ticket create successfully")
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div className="flex justify-center mt-12">
       <div className="w-full max-w-lg bg-zinc-900 text-white rounded-2xl shadow-xl p-8">
@@ -10,20 +40,27 @@ const TicketsForm = ({ handleTicketForm }) => {
           <input
             type="text"
             placeholder="Title"
+            value={ticket.title}
+            onChange={(e) => setTicket({ ...ticket, title: e.target.value })}
             className="bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500"
           />
 
           <textarea
             placeholder="Description"
+            value={ticket.description}
+            onChange={(e) => setTicket({ ...ticket, description: e.target.value })}
             rows={4}
             className="bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500 resize-none"
           />
 
-          <select className="bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500">
-            <option>Priority</option>
-            <option>Low</option>
-            <option>Medium</option>
-            <option>High</option>
+          <select
+            value={ticket.priority}
+            onChange={(e) => setTicket({ ...ticket, priority: e.target.value })}
+            className="bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 outline-none focus:border-blue-500">
+              <option>PRIORITY</option>
+            <option value="LOW">LOW</option>
+            <option value="MEDIUM">MEDIEM</option>
+            <option value="HIGH">HIGH</option>
           </select>
 
           <button
