@@ -23,7 +23,7 @@ const updateStatusApi = async (id) => {
 }
 
 const getTicketApi = async (filters) => {
-    const res = await axiosInstance.get("/tickets/getTickets", {
+    const res = await axiosInstance.get("/tickets/getTicket", {
         params: filters
     })
     return res.data;

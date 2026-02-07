@@ -73,10 +73,12 @@ const useTicketStore = create((set) => ({
         try {
             const res = await getTicketApi(filters);
             set({
-                isLoading: true,
-                tickets: res.tickets,
-                count: res.length,
+                isLoading: false,
+                tickets: res.data.tickets,
+                count: res.data.count,
             });
+            // console.log("tickets zustand", tickets);
+
             return res.data
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "Failed to fetch tickets" })
