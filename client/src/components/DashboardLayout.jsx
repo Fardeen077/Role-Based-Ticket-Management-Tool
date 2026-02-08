@@ -3,13 +3,14 @@ import Sidebar from './Sidebar'
 import { Outlet } from "react-router-dom";
 function DashboardLayout() {
     return (
-        <div className="h-screen flex overflow-hidden bg-black">
+        <div className="md:min-h-screen flex bg-black h-screen">
+            {/* overflow-hidden */}
 
             {/* sidebar - handles both desktop and mobile */}
             <Sidebar />
 
             {/* main content */}
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 md:overflow-y-auto">
                 <div className="p-4">
                     <Outlet />
                 </div>

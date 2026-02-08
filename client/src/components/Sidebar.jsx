@@ -5,7 +5,6 @@ import { IoIosLogOut } from "react-icons/io";
 import { BsLayoutSidebar } from "react-icons/bs";
 import { LuTickets } from "react-icons/lu";
 import { useState } from "react";
-import { IoMdClose } from "react-icons/io";
 
 function Sidebar() {
     const { logout } = useAuthStore();
@@ -22,13 +21,13 @@ function Sidebar() {
 
     return (
         <>
-            {/* ================= MOBILE TOP BAR ================= */}
+            {/*  MOBILE TOP BAR  */}
             <div className="lg:hidden fixed top-0 left-0 w-full h-14 bg-zinc-900 text-white flex items-center justify-between px-4 z-30 border-b border-zinc-800">
 
                 {/* LEFT → MENU BUTTON */}
                 <button
                     onClick={() => setMobileOpen(true)}
-                    className="text-xl bg-black p-2 rounded"
+                    className="text-xl bg-black p-4 rounded"
                 >
                     <BsLayoutSidebar />
                 </button>
@@ -50,7 +49,7 @@ function Sidebar() {
             )}
 
 
-            {/* ================= SIDEBAR ================= */}
+            {/*  SIDEBAR */}
             <aside
                 className={`
         bg-zinc-900 text-white
@@ -117,7 +116,7 @@ function Sidebar() {
                         onClick={handleLogout}
                         className={`flex items-center gap-2 text-zinc-300 ${!desktopOpen && "lg:justify-center"}`}
                     >
-                        <IoIosLogOut /> 
+                        <IoIosLogOut />
                         {desktopOpen && <span>Logout</span>}
                     </button>
 
