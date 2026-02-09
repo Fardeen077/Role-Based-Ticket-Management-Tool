@@ -59,9 +59,16 @@ const useTicketStore = create((set) => ({
 
     searchUser: async (query) => {
         set({ isLoading: true, error: null });
+        console.log("QUERY STORE:", query);
         try {
             const res = await searchUserApi(query);
-            set({ isLoading: false, tickets: res.data });
+            set({
+                isLoading:
+                    false,
+                tickets: res.data || [],
+                count: res.data.length || 0
+            });
+            console.log("zustand tickets state", res.data);
             return res.data;
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "Not found" })

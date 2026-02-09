@@ -31,22 +31,41 @@ const updateTicketStatus = asyncHandler(async (req, res) => {
     ticket.status = status;
     await ticket.save();
 
-    return res.status(200).json(new ApiResponse(201, ticket, "Ticket status updated successfully"));
+    return res.status(201).json(new ApiResponse(201, ticket, "Ticket status updated successfully"));
 });
 
 const searchUsers = asyncHandler(async (req, res) => {
     const { query } = req.query;
+    console.log("QUERY:", query);
     if (!query) {
         throw new ApiError(400, "Search query requried");
     }
+
     const users = await User.find({
         $or: [
             { name: { $regex: query, $options: "i" } },
-            { email: { $regex: query, $options: "i" } },
+            { email: { $regex: query, $options: "i" } }
         ]
-    }).select("name email");
+    }).select("_id");
+    const userIds = users.map(u => u._id);
 
-    return res.status(200).json(new ApiResponse(200, users, "Users find successfully"));
+    const ticket = await Ticket.find({
+        // regex is database methord use for seach string in url 
+        // i case-insensitive
+        $or: [
+            { title: { $regex: query, $options: "i" } },
+            { description: { $regex: query, $options: "i" } },
+            { status: { $regex: query, $options: "i" } },
+            { priority: { $regex: query, $options: "i" } },
+
+            // user fields
+            { createdBy: { $in: userIds } },
+            { assignedTo: { $in: userIds } }
+        ]
+    }).populate("createdBy", "name email")
+        .populate("assignedTo", "name email");
+
+    return res.status(200).json(new ApiResponse(200, ticket, "Users find successfully"));
 });
 
 const assignedTicket = asyncHandler(async (req, res) => {
