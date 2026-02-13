@@ -28,7 +28,13 @@ const getTicketApi = async (filters) => {
     })
     return res.data;
 }
+
+const singleTicketApi = async (id) => {
+    const res = await axiosInstance.get(`/tickets/${id}`);
+    return res.data
+}
 export {
+    singleTicketApi,
     createTicketApi,
     updateStatusApi,
     assignedTicketApi,

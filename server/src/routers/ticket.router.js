@@ -3,7 +3,8 @@ import {
     updateTicketStatus,
     getTicket,
     searchUsers,
-    assignedTicket
+    assignedTicket,
+    singleTicket
 } from "../controllers/ticket.controller.js"
 import { roles } from "../middlewares/role.middleware.js"
 
@@ -18,5 +19,6 @@ router.get("/search-users", verifyJwt, roles("ADMIN"), searchUsers);
 router.patch("/:id/update-status", verifyJwt, roles("ADMIN", "AGENT"), updateTicketStatus);
 router.get("/getTicket", verifyJwt, roles("ADMIN", "AGENT", "USER"), getTicket);
 router.patch("/:ticketId/assigned", verifyJwt, roles("ADMIN"), assignedTicket); // i pass worng paramiter
+router.get("/:id", singleTicket)
 
 export default router

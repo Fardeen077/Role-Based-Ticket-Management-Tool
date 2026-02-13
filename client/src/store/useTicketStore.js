@@ -4,6 +4,7 @@ import {
     assignedTicketApi,
     getTicketApi,
     searchUserApi,
+    singleTicketApi
 } from "../api/ticketsApi"
 import { create } from 'zustand';
 
@@ -89,6 +90,15 @@ const useTicketStore = create((set) => ({
             return res.data
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "Failed to fetch tickets" })
+        }
+    },
+    singleTicket: async (id) => {
+        set({ isLoading: true })
+        try {
+            const res = await singleTicketApi(id);
+            set({ tickets: res.data, isLoading: false })
+        } catch (error) {
+            set({ isLoading: false, error: error?.response?.data?.message || "Failed to fetch ticket id" })
         }
     },
     resetTickets: () => set(initialState),

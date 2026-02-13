@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/DashBoard";
 import TicketsForm from "./components/TicketsForm";
+import TicketDetail from "./pages/TicketDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardLayout from "./components/DashboardLayout";
 import PublicRoute from "./components/PublicRoute";
@@ -15,8 +16,9 @@ function App() {
 
   useEffect(() => {
     getUser();
-    console.log("useEffect ran");
+    // console.log("useEffect ran");
   }, [getUser]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -24,7 +26,7 @@ function App() {
       </div>
     )
   }
-
+// ticketdetail
   return (
     <BrowserRouter>
       <Routes>
@@ -34,6 +36,7 @@ function App() {
           <Route element={<DashboardLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="/ticketsform" element={<TicketsForm />} />
+              <Route path="/ticketdetail/:id" element={<TicketDetail />} />
           </Route>
         </Route>
 

@@ -8,6 +8,7 @@ function Dashboard() {
     getTicket();
     console.log("useEffect fired");
   }, [getTicket])
+
   return (
     <div>
       <TicketLists />

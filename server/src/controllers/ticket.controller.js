@@ -132,7 +132,22 @@ const getTicket = asyncHandler(async (req, res) => {
     }, "Tickets fetched successfully"));
 });
 
+const singleTicket = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    if (!id) {
+        throw new ApiError(400, "id is required")
+    }
+
+    const ticket = await Ticket.findById(id);
+    if (!ticket) {
+        throw new ApiError(400, "Ticket is required")
+    }
+
+    return res.status(200).json(new ApiResponse(200, ticket, "ticket id fetched succussfully"));
+})
+
 export {
+    singleTicket,
     createTicket,
     updateTicketStatus,
     getTicket,

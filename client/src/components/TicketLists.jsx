@@ -1,5 +1,6 @@
 import useTicketStore from "../store/useTicketStore"
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom"
 import useAuthStore from "../store/useAuthStore";
 import { useEffect, useState } from "react";
 
@@ -8,6 +9,7 @@ const TicketLists = () => {
     const authUser = useAuthStore((s) => s.authUser);
     const [query, setQueary] = useState("");
     const { searchUser } = useTicketStore();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -16,6 +18,14 @@ const TicketLists = () => {
 
         return () => clearTimeout(timer);
     }, [query]);
+
+    const handleDatileTicketpage = async (id) => {
+        try {
+            navigate(`/ticketdetail/${id}`)
+        } catch (error) {
+            error(error.message)
+        }
+    }
 
     // console.log(tickets);
     // console.log(authUser);
@@ -61,7 +71,7 @@ const TicketLists = () => {
                                 <td className="px-4 py-2 border">{index + 1}</td>
                                 <td className="px-4 py-2 border">{ticket.createdBy?.name}</td>
                                 <td className="px-4 py-2 border">{ticket.title}</td>
-                                <td className="px-4 py-2 border">{ticket.description.split("").slice(0, 40).join("")}</td>
+                                <td className="px-4 py-2 border" onClick={() => handleDatileTicketpage(ticket._id)}>{ticket.description.split("").slice(0, 40).join("")}</td>
                                 <td className="px-4 py-2 border">{ticket.status}</td>
                                 <td className="px-4 py-2 border">{ticket.priority}</td>
                                 <td className="px-4 py-2 border">{ticket.assignedTo?.name || "Unassigned"}</td>
