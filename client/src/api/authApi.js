@@ -20,9 +20,15 @@ const getUserApi = async () => {
     return res.data
 }
 
+const getAgentUsersApi = async () => {
+    const res = await axiosInstance.get("/auth/agent")
+    return res.data
+}
+
 export {
     registerApi,
     loginApi,
     logoutApi,
-    getUserApi
+    getUserApi,
+    getAgentUsersApi,
 }

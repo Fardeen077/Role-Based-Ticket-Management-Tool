@@ -36,7 +36,7 @@ const updateTicketStatus = asyncHandler(async (req, res) => {
 
 const searchUsers = asyncHandler(async (req, res) => {
     const { query } = req.query;
-    console.log("QUERY:", query);
+    // console.log("QUERY:", query);
     if (!query) {
         throw new ApiError(400, "Search query requried");
     }

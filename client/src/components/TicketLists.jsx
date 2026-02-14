@@ -1,6 +1,6 @@
 import useTicketStore from "../store/useTicketStore"
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import useAuthStore from "../store/useAuthStore";
 import { useEffect, useState } from "react";
 
@@ -26,7 +26,6 @@ const TicketLists = () => {
             error(error.message)
         }
     }
-
     // console.log(tickets);
     // console.log(authUser);
 
@@ -80,10 +79,6 @@ const TicketLists = () => {
                     </tbody>
                 </table>
             </div>
-            {/* <div className="flex gap-10 justify-center items-center mt-5">
-                <button className=" bg-zinc-900 p-2 rounded cursor-pointer">next</button>
-                <button className=" bg-zinc-900 p-2 rounded cursor-pointer">prev</button>
-            </div> */}
         </div >
     )
 

@@ -95,7 +95,16 @@ const getUser = asyncHandler(async (req, res) => {
 
     return res.status(201).json(new ApiResponse(201, user, "user Ready to fetch"))
 });
+
+const getAgentUsers = asyncHandler(async (req, res) => {
+    const agents = await User.find({ role: "AGENT" })
+
+    res.status(200).json(
+        new ApiResponse(200, agents, "Agents fetched")
+    );
+});
 export {
+    getAgentUsers,
     registerUser,
     loginUser,
     logoutUser,

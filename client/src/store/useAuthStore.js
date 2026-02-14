@@ -2,7 +2,8 @@ import {
     registerApi,
     loginApi,
     logoutApi,
-    getUserApi
+    getUserApi,
+    getAgentUsersApi
 } from "../api/authApi";
 import { create } from 'zustand';
 
@@ -11,17 +12,20 @@ const useAuthStore = create((set) => ({
     isLoading: false,
     authUser: null,
     error: null,
+    authAgent: [],
 
     register: async (userData) => {
         set({ isLoading: true, error: null });
         try {
             const res = await registerApi(userData);
+            console.log("store res", res);
+            
             set({ isLoading: false, authUser: res.data.user, isAuth: true })
             return res.data;
         } catch (error) {
             const message = error?.response?.data?.message || "Register failed";
             set({ isLoading: false, error: message });
-          throw new Error(message);
+            throw new Error(message);
         }
     },
 
@@ -44,6 +48,20 @@ const useAuthStore = create((set) => ({
             const res = await getUserApi();
             set({ isLoading: false, authUser: res.data, isAuth: true })
             return res.data;
+        } catch (error) {
+            const message = error?.response?.data?.message || "Fetched failed";
+            set({ isLoading: false, error: message });
+            throw new Error(message);
+        }
+    },
+    getAgentUsers: async () => {
+        set({ isLoading: true, error: null });
+        try {
+            const res = await getAgentUsersApi();
+            // console.log(res);
+            set({ authAgent: res.data, isLoading: false, isAuth: true });
+            // console.log("store", authAgent);
+            return res.data
         } catch (error) {
             const message = error?.response?.data?.message || "Fetched failed";
             set({ isLoading: false, error: message });

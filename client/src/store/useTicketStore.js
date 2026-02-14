@@ -13,7 +13,9 @@ const initialState = {
     count: 0,
     isLoading: false,
     error: null,
+    ticketDetail: null,
 };
+
 const useTicketStore = create((set) => ({
     ...initialState,
 
@@ -60,7 +62,7 @@ const useTicketStore = create((set) => ({
 
     searchUser: async (query) => {
         set({ isLoading: true, error: null });
-        console.log("QUERY STORE:", query);
+        // console.log("QUERY STORE:", query);
         try {
             const res = await searchUserApi(query);
             set({
@@ -69,7 +71,7 @@ const useTicketStore = create((set) => ({
                 tickets: res.data || [],
                 count: res.data.length || 0
             });
-            console.log("zustand tickets state", res.data);
+            // console.log("zustand tickets state", res.data);
             return res.data;
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "Not found" })
@@ -85,7 +87,7 @@ const useTicketStore = create((set) => ({
                 tickets: res.data.tickets,
                 count: res.data.count,
             });
-            // console.log("tickets zustand", tickets);
+            console.log("tickets zustand", tickets);
 
             return res.data
         } catch (error) {
@@ -96,7 +98,10 @@ const useTicketStore = create((set) => ({
         set({ isLoading: true })
         try {
             const res = await singleTicketApi(id);
-            set({ tickets: res.data, isLoading: false })
+            set({ ticketDetail: res.data, isLoading: false })
+            console.log(ticketDetail);
+            
+            return res.data
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "Failed to fetch ticket id" })
         }
