@@ -10,7 +10,7 @@ import { create } from 'zustand';
 const useAuthStore = create((set) => ({
     isAuth: false,
     isLoading: false,
-    authUser: null,
+    authUser: false,
     error: null,
     authAgent: [],
 
@@ -19,7 +19,7 @@ const useAuthStore = create((set) => ({
         try {
             const res = await registerApi(userData);
             console.log("store res", res);
-            
+
             set({ isLoading: false, authUser: res.data.user, isAuth: true })
             return res.data;
         } catch (error) {
@@ -59,7 +59,7 @@ const useAuthStore = create((set) => ({
         try {
             const res = await getAgentUsersApi();
             // console.log(res);
-            set({ authAgent: res.data, isLoading: false, isAuth: true });
+            set({ authAgent: res.data, isLoading: false });
             // console.log("store", authAgent);
             return res.data
         } catch (error) {

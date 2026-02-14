@@ -8,13 +8,19 @@ function TicketDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { singleTicket, ticketDetail } = useTicketStore();
+    // const singleTicket = useTicketStore((st) => st.singleTicket);
+    // const ticketDetail = useTicketStore((st) => st.ticketDetail);
+
     const authUser = useAuthStore((state) => state.authUser);
 
     useEffect(() => {
         if (id) {
             singleTicket(id)
+            // console.log(id);   
         }
-    }, [id])
+    }, []);
+    console.log(authUser, "ticket admin");
+
 
     // console.log("Ticket for delatiticket", tickets);
     // console.log("id", id);
@@ -31,11 +37,11 @@ function TicketDetail() {
                 <h1>{ticketDetail?.priority}</h1>
                 <h1>{ticketDetail?.status}</h1>
 
-                {authUser.role === "ADMIN" && (
+                {authUser?.role === "ADMIN" && (
                     <button className='bg-zinc-900 p-2 rounded cursor-pointer w-20'>Assigned</button>
                 )}
             </div>
-            {/* {authUser.role === "ADMIN" && <AgentPopup />} */}
+            {authUser.role === "ADMIN" && <AgentPopup />}
         </div>
     )
 }

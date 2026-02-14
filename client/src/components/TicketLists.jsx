@@ -13,6 +13,7 @@ const TicketLists = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
+            if (!query) return
             searchUser(query);
         }, 400);
 

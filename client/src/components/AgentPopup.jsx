@@ -1,13 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import useAuthStore from "../store/useAuthStore";
 
 function AgentPopup() {
-    const { getAgentUsers } = useAuthStore();
-    const authAgent = useAuthStore((state)=> state.authAgent)
+    const { getAgentUsers, authAgent } = useAuthStore()
 
     useEffect(() => {
+        if (authAgent.length > 0) return
         getAgentUsers();
     }, []);
+
     console.log("from popup", authAgent);
 
     return (
@@ -19,7 +20,6 @@ function AgentPopup() {
                     </li>
                 </ul>
             ))}
-
         </div>
     )
 }
