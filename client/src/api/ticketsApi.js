@@ -12,8 +12,9 @@ const searchUserApi = async (query) => {
     return res.data
 }
 
-const assignedTicketApi = async (ticketId) => {
-    const res = await axiosInstance.patch(`/tickets/${ticketId}/assigned`, ticketId);
+const assignedTicketApi = async (ticketId, agentId) => {
+    const res = await axiosInstance.patch(`/tickets/${ticketId}/assigned`
+        , { agentId });
     return res.data;
 }
 

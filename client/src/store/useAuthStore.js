@@ -23,9 +23,7 @@ const useAuthStore = create((set) => ({
             set({ isLoading: false, authUser: res.data.user, isAuth: true })
             return res.data;
         } catch (error) {
-            const message = error?.response?.data?.message || "Register failed";
-            set({ isLoading: false, error: message });
-            throw new Error(message);
+            set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
         }
     },
 
@@ -36,9 +34,7 @@ const useAuthStore = create((set) => ({
             set({ isLoading: false, authUser: res.data.user, isAuth: true })
             return res.data;
         } catch (error) {
-            const message = error?.response?.data?.message || "Login failed";
-            set({ isLoading: false, error: message });
-            throw new Error(message);
+            set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
         }
     },
 
@@ -49,23 +45,18 @@ const useAuthStore = create((set) => ({
             set({ isLoading: false, authUser: res.data, isAuth: true })
             return res.data;
         } catch (error) {
-            const message = error?.response?.data?.message || "Fetched failed";
-            set({ isLoading: false, error: message });
-            throw new Error(message);
+            set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
         }
     },
     getAgentUsers: async () => {
         set({ isLoading: true, error: null });
         try {
             const res = await getAgentUsersApi();
-            // console.log(res);
             set({ authAgent: res.data, isLoading: false });
-            // console.log("store", authAgent);
-            return res.data
+            // console.log("store", res);
+            return res?.data
         } catch (error) {
-            const message = error?.response?.data?.message || "Fetched failed";
-            set({ isLoading: false, error: message });
-            throw new Error(message);
+            set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
         }
     },
 
@@ -76,9 +67,7 @@ const useAuthStore = create((set) => ({
             set({ isLoading: false, authUser: null, isAuth: false })
             return res.data;
         } catch (error) {
-            const message = error?.response?.data?.message || "Logout failed";
-            set({ isLoading: false, error: message });
-            throw new Error(message);
+            set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
         }
     },
 }));

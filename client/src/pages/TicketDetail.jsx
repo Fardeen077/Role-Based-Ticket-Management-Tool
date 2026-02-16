@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useTicketStore from '../store/useTicketStore';
 import AgentPopup from '../components/AgentPopup';
@@ -8,8 +8,6 @@ function TicketDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { singleTicket, ticketDetail } = useTicketStore();
-    // const singleTicket = useTicketStore((st) => st.singleTicket);
-    // const ticketDetail = useTicketStore((st) => st.ticketDetail);
 
     const authUser = useAuthStore((state) => state.authUser);
 
@@ -19,8 +17,8 @@ function TicketDetail() {
             // console.log(id);   
         }
     }, []);
-    console.log(authUser, "ticket admin");
 
+    // console.log(authUser, "ticket admin");
 
     // console.log("Ticket for delatiticket", tickets);
     // console.log("id", id);
@@ -37,13 +35,12 @@ function TicketDetail() {
                 <h1>{ticketDetail?.priority}</h1>
                 <h1>{ticketDetail?.status}</h1>
 
-                {authUser?.role === "ADMIN" && (
-                    <button className='bg-zinc-900 p-2 rounded cursor-pointer w-20'>Assigned</button>
+                {authUser.role === "ADMIN" && (
+                    <AgentPopup ticketId={id}/>
                 )}
             </div>
-            {authUser.role === "ADMIN" && <AgentPopup />}
-        </div>
-    )
-}
+        </div >
+    );
+};
 
-export default TicketDetail
+export default TicketDetail;

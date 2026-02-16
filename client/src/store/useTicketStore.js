@@ -45,13 +45,16 @@ const useTicketStore = create((set) => ({
         }
     },
 
-    assignedTicket: async (ticketId) => {
+    assignedTicket: async (ticketId, agentId) => {
         set({ isLoading: true, error: null });
         try {
-            const res = await assignedTicketApi(ticketId);
+            const res = await assignedTicketApi(ticketId, agentId);
             set((state) => ({
-                tickets: state.tickets.map((ticket) => ticket._id === ticketId ? res.data : ticket)
+                tickets: state.tickets.map((ticket) => ticket._id === ticketId ? res.data : ticket),
+                isLoading:false,                    
             }));
+            // console.log(agentId, ticketId, "from store");
+            // console.log(res);
         } catch (error) {
             set({
                 isLoading: false,
