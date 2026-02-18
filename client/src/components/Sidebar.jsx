@@ -7,7 +7,7 @@ import { LuTickets } from "react-icons/lu";
 import { useState } from "react";
 
 function Sidebar() {
-    const { logout } = useAuthStore();
+    const { logout, authUser } = useAuthStore();
     const navigate = useNavigate();
 
     const [desktopOpen, setDesktopOpen] = useState(true);
@@ -103,12 +103,14 @@ function Sidebar() {
                             </Link>
                         </li>
 
-                        <li>
-                            <Link to="/ticketsform" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 text-zinc-300">
-                                ➕
-                                {desktopOpen && <span>Create Ticket</span>}
-                            </Link>
-                        </li>
+                        {authUser.role === "USER" && (
+                            <li>
+                                <Link to="/ticketsform" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 text-zinc-300">
+                                    ➕
+                                    {desktopOpen && <span>Create Ticket</span>}
+                                </Link>
+                            </li>
+                        )}
                     </ul>
 
                     {/* LOGOUT */}

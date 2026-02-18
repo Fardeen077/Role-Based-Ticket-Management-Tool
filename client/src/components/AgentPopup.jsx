@@ -2,6 +2,7 @@ import { useState } from "react";
 import useAuthStore from "../store/useAuthStore";
 import { IoMdClose } from "react-icons/io";
 import useTicketStore from "../store/useTicketStore";
+import toast from "react-hot-toast";
 
 function AgentPopup({ ticketId }) {
     const { getAgentUsers, authAgent, isLoading } = useAuthStore();
@@ -28,9 +29,10 @@ function AgentPopup({ ticketId }) {
         try {
             await assignedTicket(ticketId, agentId);
             // console.log("agent id", agentId, "ticket id", ticketId );
+            toast.success("Ticket Assigned successfully")
             setopen(false)
         } catch (error) {
-            error(error.message || "failed to assign");
+            toast.error(error?.response?.data?.message);
         }
     }
 
@@ -46,7 +48,7 @@ function AgentPopup({ ticketId }) {
 
     return (
         <div className="text-white">
-            <button onClick={handlePopUp}>Agent</button>
+            <button onClick={handlePopUp} className="w-full bg-black py-2 mt-5 hover:bg-zinc-950 cursor-pointer">Agent</button>
             {open && (
                 <div className="fixed inset-0 bg-black/40 flex justify-center items-center">
                     <div className="bg-zinc-900 p-5 rounded w-80 relative">

@@ -6,7 +6,8 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { validateLogin } from "../validations/authValidations";
 
 const Login = () => {
-    const { login, isLoading } = useAuthStore();
+    const { login, isLoading} = useAuthStore();
+
     const [userData, setUserData] = useState({
         email: "",
         password: ""
@@ -26,7 +27,9 @@ const Login = () => {
             toast.success("Login successfully");
             navigate("/");
         } catch (error) {
-            toast.error(error.message)
+           toast.error(error?.response?.data?.message);
+        //    console.log(error?.response?.data?.message);
+           
         }
     };
     return (

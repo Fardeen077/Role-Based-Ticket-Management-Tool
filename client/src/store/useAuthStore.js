@@ -24,6 +24,7 @@ const useAuthStore = create((set) => ({
             return res.data;
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
+            throw error;
         }
     },
 
@@ -35,6 +36,7 @@ const useAuthStore = create((set) => ({
             return res.data;
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
+            throw error;
         }
     },
 
@@ -46,6 +48,7 @@ const useAuthStore = create((set) => ({
             return res.data;
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
+            throw error;
         }
     },
     getAgentUsers: async () => {
@@ -57,6 +60,7 @@ const useAuthStore = create((set) => ({
             return res?.data
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
+            throw error;
         }
     },
 
@@ -68,6 +72,7 @@ const useAuthStore = create((set) => ({
             return res.data;
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
+            throw error;
         }
     },
 }));

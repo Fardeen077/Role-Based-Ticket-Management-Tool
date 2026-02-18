@@ -24,7 +24,7 @@ const TicketLists = () => {
         try {
             navigate(`/ticketdetail/${id}`)
         } catch (error) {
-            error(error.message)
+            error(error?.response?.data?.message);
         }
     }
     // console.log(tickets);
@@ -53,16 +53,16 @@ const TicketLists = () => {
 
             {/* Table */}
             <div className="overflow-x-auto w-full">
-                <table className="min-w-5xl w-full border">
+                <table className="table-fixed w-full border">
                     <thead className="bg-zinc-900">
                         <tr>
-                            <th className="px-4 py-2 border">No</th>
-                            <th className="px-4 py-2 border">Username</th>
-                            <th className="px-4 py-2 border">Title</th>
-                            <th className="px-4 py-2 border">Description</th>
-                            <th className="px-4 py-2 border">Status</th>
-                            <th className="px-4 py-2 border">Priority</th>
-                            <th className="px-4 py-2 border">AssignedTo</th>
+                            <th className="w-16 px-4 py-2 border">No</th>
+                            <th className="w-40 px-4 py-2 border">Username</th>
+                            <th className="w-52 px-4 py-2 border">Title</th>
+                            <th className="w-75 px-4 py-2 border">Description</th>
+                            <th className="w-32 px-4 py-2 border">Status</th>
+                            <th className="w-28 px-4 py-2 border">Priority</th>
+                            <th className="w-40 px-4 py-2 border">Assigned</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,8 +70,11 @@ const TicketLists = () => {
                             < tr key={ticket._id} className="text-center" >
                                 <td className="px-4 py-2 border">{index + 1}</td>
                                 <td className="px-4 py-2 border">{ticket.createdBy?.name}</td>
-                                <td className="px-4 py-2 border">{ticket.title}</td>
-                                <td className="px-4 py-2 border" onClick={() => handleDatileTicketpage(ticket._id)}>{ticket.description.split("").slice(0, 40).join("")}</td>
+                                <td className="px-4 py-2 border">{ticket.title.split("").slice(0, 25).join("")}</td>
+                                <td className="px-4 py-2 border cursor-pointer" onClick={() => handleDatileTicketpage(ticket._id)}>
+                                    <span className="hover:text-blue-500 cursor-pointer underline max-w-75">
+                                        {ticket.description.split("").slice(0, 40).join("")}
+                                    </span></td>
                                 <td className="px-4 py-2 border">{ticket.status}</td>
                                 <td className="px-4 py-2 border">{ticket.priority}</td>
                                 <td className="px-4 py-2 border">{ticket.assignedTo?.name || "Unassigned"}</td>
