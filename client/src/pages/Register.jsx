@@ -31,7 +31,6 @@ const Register = () => {
              toast.error(error?.response?.data?.message);
         }
     };
-    // bg-[#aaaaaa]
     return (
         <div className="min-h-screen flex items-center justify-center">
             <div className="bg-neutral-800 text-white w-80 rounded-2xl shadow-2xl">

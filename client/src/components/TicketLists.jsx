@@ -43,9 +43,27 @@ const TicketLists = () => {
                             value={query}
                             onChange={(e) => setQueary(e.target.value)}
                             className="p-2 w-full md:w-64 border rounded md:mt-1" />
-                        <div className="gap-5 flex pr-10 p-2">
-                            <p>filter1</p>
-                            <p>filter2</p>
+
+                        <div className="gap-5 flex pr-10 p-2 text-center">
+                            <select
+                                value={query}
+                                onChange={(e) => setQueary(e.target.value)}
+                                className="bg-black rounded">
+                                <option>PRIORITY</option>
+                                <option value="LOW">LOW</option>
+                                <option value="MEDIUM">MEDIEM</option>
+                                <option value="HIGH">HIGH</option>
+                            </select>
+
+                            <select
+                                value={query}
+                                onChange={(e) => setQueary(e.target.value)}
+                                className="bg-black rounded ">
+                                <option>STATUS</option>
+                                <option value="IN_PROGRESS">IN PROGRESS</option>
+                                <option value="OPEN">OPEN</option>
+                                <option value="CLOSE">CLOSE</option>
+                            </select>
                         </div>
                     </>
                 )}

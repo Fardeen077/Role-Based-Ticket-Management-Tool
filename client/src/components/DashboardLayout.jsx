@@ -4,8 +4,7 @@ import { Outlet } from "react-router-dom";
 function DashboardLayout() {
     return (
         <div className="md:min-h-screen flex bg-black h-screen">
-            {/* overflow-hidden */}
-
+            
             {/* sidebar - handles both desktop and mobile */}
             <Sidebar />
 

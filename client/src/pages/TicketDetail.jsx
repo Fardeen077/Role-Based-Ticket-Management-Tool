@@ -69,7 +69,7 @@ function TicketDetail() {
                     </div>
 
                 </div>
-
+                {/* only admin allow to show Agent list */}
                 {authUser.role === "ADMIN" && (
                     <AgentPopup ticketId={id} />
                 )}
