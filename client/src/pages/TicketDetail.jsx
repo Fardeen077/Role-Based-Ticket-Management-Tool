@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useTicketStore from '../store/useTicketStore';
 import AgentPopup from '../components/AgentPopup';
@@ -18,6 +18,7 @@ function TicketDetail() {
             // console.log(id);   
         }
     }, []);
+    // console.log(ticketDetail?.assignedTo?.name);
 
     // console.log(authUser, "ticket admin");
 
