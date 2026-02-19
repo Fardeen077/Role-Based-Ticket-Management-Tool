@@ -5,20 +5,36 @@ import useAuthStore from "../store/useAuthStore";
 import { useEffect, useState } from "react";
 
 const TicketLists = () => {
-    const { isLoading, tickets } = useTicketStore();
+    const { tickets, getTicket } = useTicketStore();
     const authUser = useAuthStore((s) => s.authUser);
     const [query, setQueary] = useState("");
     const { searchUser } = useTicketStore();
     const navigate = useNavigate();
+    
+    const [filter, setFilter] = useState({
+        status: "",
+        priority: ""
+    });
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            if (!query) return
-            searchUser(query);
-        }, 400);
+            if (query.trim() !== "") {
+                searchUser(query)
+                return;
+            }
+
+            if (filter.status || filter.priority) {
+                getTicket(filter);
+                return
+            }
+            getTicket({});
+            console.log(getTicket);
+
+        }, 500);
 
         return () => clearTimeout(timer);
-    }, [query]);
+    }, [query, filter]);
+
 
     const handleDatileTicketpage = async (id) => {
         try {
@@ -44,24 +60,30 @@ const TicketLists = () => {
                             onChange={(e) => setQueary(e.target.value)}
                             className="p-2 w-full md:w-64 border rounded md:mt-1" />
 
-                        <div className="gap-5 flex pr-10 p-2 text-center">
+                        <div className="gap-5 flex pr-10 p-2 text-cente">
                             <select
-                                value={query}
-                                onChange={(e) => setQueary(e.target.value)}
-                                className="bg-black rounded">
-                                <option>PRIORITY</option>
+                                className="bg-black"
+                                value={filter.priority}
+                                onChange={(e) =>
+                                    setFilter(prev => ({ ...prev, priority: e.target.value }))
+                                }
+                            >
+                                <option value="">PRIORITY</option>
                                 <option value="LOW">LOW</option>
-                                <option value="MEDIUM">MEDIEM</option>
+                                <option value="MEDIUM">MEDIUM</option>
                                 <option value="HIGH">HIGH</option>
                             </select>
 
                             <select
-                                value={query}
-                                onChange={(e) => setQueary(e.target.value)}
-                                className="bg-black rounded ">
-                                <option>STATUS</option>
-                                <option value="IN_PROGRESS">IN PROGRESS</option>
+                                className="bg-black"
+                                value={filter.status}
+                                onChange={(e) =>
+                                    setFilter(prev => ({ ...prev, status: e.target.value }))
+                                }
+                            >
+                                <option value="">STATUS</option>
                                 <option value="OPEN">OPEN</option>
+                                <option value="IN_PROGRESS">IN PROGRESS</option>
                                 <option value="CLOSE">CLOSE</option>
                             </select>
                         </div>
