@@ -10,7 +10,7 @@ const TicketLists = () => {
     const [query, setQueary] = useState("");
     const { searchUser } = useTicketStore();
     const navigate = useNavigate();
-    
+
     const [filter, setFilter] = useState({
         status: "",
         priority: ""
@@ -28,7 +28,7 @@ const TicketLists = () => {
                 return
             }
             getTicket({});
-            console.log(getTicket);
+            // console.log(getTicket);
 
         }, 500);
 
@@ -122,6 +122,11 @@ const TicketLists = () => {
                         ))}
                     </tbody>
                 </table>
+                    {tickets.length === 0 && (
+                        <div className="text-4xl flex justify-center mt-5 overflow-hidden">
+                            Not found
+                        </div>
+                    )}
             </div>
         </div >
     )

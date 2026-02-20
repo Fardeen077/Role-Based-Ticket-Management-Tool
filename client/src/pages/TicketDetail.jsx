@@ -4,12 +4,12 @@ import useTicketStore from '../store/useTicketStore';
 import AgentPopup from '../components/AgentPopup';
 import useAuthStore from '../store/useAuthStore';
 import { statusColor, priorityColor } from '../utils/ticketColors.js';
+import toast from 'react-hot-toast';
 
 function TicketDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { singleTicket, ticketDetail } = useTicketStore();
-
+    const { singleTicket, updateTicketStatus, ticketDetail } = useTicketStore();
     const authUser = useAuthStore((state) => state.authUser);
 
     useEffect(() => {
@@ -17,7 +17,24 @@ function TicketDetail() {
             singleTicket(id)
             // console.log(id);   
         }
-    }, []);
+    }, [id]);
+
+    const handleUpdateStatus = async (id, status) => {
+        if (!ticketDetail) return;
+        const currentStatus = ticketDetail.status;
+        if (currentStatus === "CLOSED") {
+            toast.error("Ticket already closed");
+            return
+        }
+        try {
+            await updateTicketStatus(id, status)
+            toast.success("Ticket status update successfully");
+            // console.log(id);
+        } catch (error) {
+            toast.error(error?.response?.data?.message || "Failed to update")
+        }
+    }
+
     // console.log(ticketDetail?.assignedTo?.name);
 
     // console.log(authUser, "ticket admin");
@@ -27,10 +44,26 @@ function TicketDetail() {
     return (
         <div className="max-w-3xl mx-auto bg-zinc-900 text-white p-6 rounded-xl shadow">
             <div className='text-white md:mt-5 mt-20 '>
-                <button onClick={() => navigate("/")}>
-                    - Back
-                </button>
+                <div className='flex justify-between'>
+                    {/* back button */}
+                    <button onClick={() => navigate("/")}>
+                        - Back
+                    </button>
 
+                    {/* edite option for update tickets status */}
+                    {(authUser.role === "ADMIN" || authUser.role === "AGENT") && (
+                        <select className='text-sm'
+                            value={ticketDetail?.status}
+                            onChange={(e) => handleUpdateStatus(id, e.target.value)}>
+                            <option className='bg-black'
+                                value="OPEN">OPEN</option>
+                            <option className='bg-black'
+                                value="IN_PROGRESS">IN PROGRESS</option>
+                            <option className='bg-black'
+                                value="CLOSED">CLOSE</option>
+                        </select>
+                    )}
+                </div>
                 <h1 className="text-2xl font-bold mb-6">Ticket Details</h1>
                 <div className='flex flex-col gap-2 '>
                     <div className="mb-5">
@@ -62,7 +95,7 @@ function TicketDetail() {
 
                     {/* Status */}
                     <div className='flex justify-between'>
-                        <p className="text-sm text-zinc-400">Status</p>
+                        <p className='text-sm text-zinc-400'>status</p>
                         <span className={`px-2 py-1 rounded ${statusColor[ticketDetail?.status] || "bg-zinc-500"
                             } text-sm`}>
                             {ticketDetail?.status}

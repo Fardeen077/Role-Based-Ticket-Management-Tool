@@ -11,7 +11,7 @@ function Dashboard() {
 
   return (
     <div>
-      <TicketLists />
+      <TicketLists/>
     </div>
   )
 }

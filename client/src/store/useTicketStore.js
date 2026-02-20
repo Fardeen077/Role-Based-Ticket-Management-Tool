@@ -4,7 +4,8 @@ import {
     assignedTicketApi,
     getTicketApi,
     searchUserApi,
-    singleTicketApi
+    singleTicketApi,
+    updateTicketStatusApi
 } from "../api/ticketsApi"
 import { create } from 'zustand';
 
@@ -51,7 +52,7 @@ const useTicketStore = create((set) => ({
             const res = await assignedTicketApi(ticketId, agentId);
             set((state) => ({
                 tickets: state.tickets.map((ticket) => ticket._id === ticketId ? res.data : ticket),
-                isLoading:false,                    
+                isLoading: false,
             }));
             // console.log(agentId, ticketId, "from store");
             // console.log(res);
@@ -98,15 +99,29 @@ const useTicketStore = create((set) => ({
         }
     },
     singleTicket: async (id) => {
-        set({ isLoading: true })
+        set({ isLoading: true, error: null })
         try {
             const res = await singleTicketApi(id);
             set({ ticketDetail: res.data, isLoading: false })
-            console.log(ticketDetail);
-            
+            // console.log(ticketDetail);
+
             return res.data
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "Failed to fetch ticket id" })
+        }
+    },
+    updateTicketStatus: async (id, status) => {
+        set({ isLoading: true })
+        try {
+            const res = await updateTicketStatusApi(id, status);
+            set((state) => ({
+                tickets: state.tickets.map(ticket => ticket._id === id ? { ...ticket, status } : ticket),
+                ticketDetail: state.ticketDetail?._id === id ? { ...state.ticketDetail, status } : state.ticketDetail,
+                isLoading: false
+            }));
+            return res.data;
+        } catch (error) {
+            set({ isLoading: false, error: error?.response?.data?.message || "Failed to update ticket status" })
         }
     },
     resetTickets: () => set(initialState),

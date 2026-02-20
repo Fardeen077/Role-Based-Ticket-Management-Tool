@@ -12,6 +12,11 @@ const searchUserApi = async (query) => {
     return res.data
 }
 
+const updateTicketStatusApi = async (id, status) => {
+    const res = await axiosInstance.patch(`/tickets/${id}/update-status`, { status });
+    return res.data;
+}
+
 const assignedTicketApi = async (ticketId, agentId) => {
     const res = await axiosInstance.patch(`/tickets/${ticketId}/assigned`
         , { agentId });
@@ -41,4 +46,5 @@ export {
     assignedTicketApi,
     getTicketApi,
     searchUserApi,
+    updateTicketStatusApi
 }
