@@ -4,9 +4,10 @@ import { IoMdClose } from "react-icons/io";
 import useTicketStore from "../store/useTicketStore";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+// import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function AgentPopup({ ticketId, assignedTo }) {
-    const { getAgentUsers, authAgent, isLoading } = useAuthStore();
+    const { getAgentUsers, authAgent } = useAuthStore();
     const [open, setopen] = useState(false);
     const { assignedTicket } = useTicketStore()
     const navigate = useNavigate()
@@ -49,19 +50,19 @@ function AgentPopup({ ticketId, assignedTo }) {
 
     // console.log("from popup", authAgent);
 
-    if (isLoading) {
-        return (
-            <div className="flex justify-center items-center h-40">
-                <AiOutlineLoading3Quarters className="animate-spin text-4xl" />
-            </div>
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <div className="flex justify-center items-center h-40">
+    //             <AiOutlineLoading3Quarters className="animate-spin text-4xl" />
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className="text-white">
             <button onClick={handlePopUp} className="w-full bg-black py-2 mt-5 hover:bg-zinc-950 cursor-pointer">Agent</button>
             {open && (
-                <div className="fixed inset-0 bg-black/40 flex justify-center items-center">
+                <div className="absolute inset-0 bg-black/40 flex justify-center items-center">
                     <div className="bg-zinc-900 p-5 rounded w-80 relative">
                         <button
                             className="absolute top-2 right-2"

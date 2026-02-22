@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useTicketStore from '../store/useTicketStore';
-import AgentPopup from '../components/AgentPopup';
+import AgentPopup from "../components/AgentPopup.jsx"
 import useAuthStore from '../store/useAuthStore';
 import { statusColor, priorityColor } from '../utils/ticketColors.js';
 import toast from 'react-hot-toast';
@@ -20,7 +20,7 @@ function TicketDetail() {
     }, [id]);
 
     const handleUpdateStatus = async (id, status) => {
-         if (!ticketDetail) return;
+        if (!ticketDetail) return;
         const currentStatus = ticketDetail.status;
         if (currentStatus === "CLOSED") {
             toast.error("Ticket already closed");
@@ -56,7 +56,7 @@ function TicketDetail() {
                             value={ticketDetail?.status}
                             onChange={(e) => handleUpdateStatus(id, e.target.value)}>
                             <option className='bg-black'
-                            value="OPEN">OPEN</option>
+                                value="OPEN">OPEN</option>
                             <option className='bg-black'
                                 value="IN_PROGRESS">IN PROGRESS</option>
                             <option className='bg-black'
@@ -106,7 +106,7 @@ function TicketDetail() {
                 {/* only admin allow to show Agent list */}
                 {authUser.role === "ADMIN" && (
                     <AgentPopup ticketId={id}
-                    assignedTo={ticketDetail?.assignedTo} />
+                        assignedTo={ticketDetail?.assignedTo} />
                 )}
             </div>
         </div >

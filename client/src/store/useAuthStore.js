@@ -9,7 +9,8 @@ import { create } from 'zustand';
 
 const useAuthStore = create((set) => ({
     isAuth: false,
-    isLoading: false,
+    isCheckingAuth: true,
+    isLoading: true,
     authUser: false,
     error: null,
     authAgent: [],
@@ -44,10 +45,10 @@ const useAuthStore = create((set) => ({
         set({ isLoading: true, error: null });
         try {
             const res = await getUserApi();
-            set({ isLoading: false, authUser: res.data, isAuth: true })
+            set({ isLoading: false, authUser: res.data, isAuth: true, isCheckingAuth: false })
             return res.data;
         } catch (error) {
-            set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
+            set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch", isAuth: false, isCheckingAuth: false });
             throw error;
         }
     },

@@ -12,7 +12,7 @@ import { create } from 'zustand';
 const initialState = {
     tickets: [],
     count: 0,
-    isLoading: false,
+    isLoading: true,
     error: null,
     ticketDetail: null,
 };
@@ -91,7 +91,7 @@ const useTicketStore = create((set) => ({
                 tickets: res.data.tickets,
                 count: res.data.count,
             });
-            console.log("tickets zustand", tickets);
+            // console.log("tickets zustand", tickets);
 
             return res.data
         } catch (error) {

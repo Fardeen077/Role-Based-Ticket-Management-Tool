@@ -2,9 +2,11 @@ import { Navigate, Outlet } from "react-router-dom"
 import useAuthStore from "../store/useAuthStore"
 
 function PublicRoute() {
-    const isAuth = useAuthStore((state) => state.isAuth);
-    if (isAuth) return <Navigate to="/" replace />
+    const { isAuth, isCheckingAuth } = useAuthStore();
+    if (isCheckingAuth) return <div>Loading...</div>;
+    if (isAuth) return <Navigate to="/" replace />;
     return <Outlet />;
 }
+
 
 export default PublicRoute
