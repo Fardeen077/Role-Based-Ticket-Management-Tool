@@ -122,11 +122,11 @@ const TicketLists = () => {
                         ))}
                     </tbody>
                 </table>
-                    {tickets.length === 0 && (
-                        <div className="text-4xl flex justify-center mt-5 overflow-hidden">
-                            Not found
-                        </div>
-                    )}
+                {tickets.length === 0 && (
+                    <div className="text-4xl flex justify-center mt-5 overflow-hidden">
+                        Not found
+                    </div>
+                )}
             </div>
         </div >
     )

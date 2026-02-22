@@ -20,7 +20,7 @@ function TicketDetail() {
     }, [id]);
 
     const handleUpdateStatus = async (id, status) => {
-        if (!ticketDetail) return;
+         if (!ticketDetail) return;
         const currentStatus = ticketDetail.status;
         if (currentStatus === "CLOSED") {
             toast.error("Ticket already closed");
@@ -56,11 +56,11 @@ function TicketDetail() {
                             value={ticketDetail?.status}
                             onChange={(e) => handleUpdateStatus(id, e.target.value)}>
                             <option className='bg-black'
-                                value="OPEN">OPEN</option>
+                            value="OPEN">OPEN</option>
                             <option className='bg-black'
                                 value="IN_PROGRESS">IN PROGRESS</option>
                             <option className='bg-black'
-                                value="CLOSED">CLOSE</option>
+                                value="CLOSED">CLOSED</option>
                         </select>
                     )}
                 </div>
@@ -105,7 +105,8 @@ function TicketDetail() {
                 </div>
                 {/* only admin allow to show Agent list */}
                 {authUser.role === "ADMIN" && (
-                    <AgentPopup ticketId={id} />
+                    <AgentPopup ticketId={id}
+                    assignedTo={ticketDetail?.assignedTo} />
                 )}
             </div>
         </div >

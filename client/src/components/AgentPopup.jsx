@@ -3,11 +3,14 @@ import useAuthStore from "../store/useAuthStore";
 import { IoMdClose } from "react-icons/io";
 import useTicketStore from "../store/useTicketStore";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-function AgentPopup({ ticketId }) {
+function AgentPopup({ ticketId, assignedTo }) {
     const { getAgentUsers, authAgent, isLoading } = useAuthStore();
     const [open, setopen] = useState(false);
     const { assignedTicket } = useTicketStore()
+    const navigate = useNavigate()
+
 
     // useEffect(() => {
     //     if (authAgent.length > 0) return
@@ -18,18 +21,26 @@ function AgentPopup({ ticketId }) {
         try {
             if (authAgent.length === 0) {
                 await getAgentUsers();
+                // console.log(authAgent);
             }
             setopen(true);
         } catch (error) {
-            error.error(error?.message || "faild to fatch data");
+            toast.error(error?.response?.data?.message || "faild to fatch data");
         }
     }
 
+
     const handleAssign = async (agentId) => {
+        if (assignedTo) {
+            toast.error("Ticket already assigned");
+            return;
+        }
         try {
             await assignedTicket(ticketId, agentId);
+            toast.success("Ticket Assigned successfully");
+            navigate("/")
             // console.log("agent id", agentId, "ticket id", ticketId );
-            toast.success("Ticket Assigned successfully")
+            
             setopen(false)
         } catch (error) {
             toast.error(error?.response?.data?.message);
@@ -61,7 +72,7 @@ function AgentPopup({ ticketId }) {
                         <h2 className="mb-3">Select Agent</h2>
 
                         <ul className="text-sm">
-                            {authAgent?.map((agent) => (
+                            {authAgent.map((agent) => (
                                 <li
                                     key={agent._id}
                                     onClick={() => handleAssign(agent._id)}

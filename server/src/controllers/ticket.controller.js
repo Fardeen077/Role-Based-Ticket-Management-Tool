@@ -81,7 +81,9 @@ const assignedTicket = asyncHandler(async (req, res) => {
     if (!ticket) {
         throw new ApiError(404, "Ticket not found")
     }
-
+    if (ticket.assignedTo) {
+        throw new ApiError(400, "Ticket already assigned");
+    }
     if (ticket.status === "CLOSED") {
         throw new ApiError(400, "Closed ticket cannot be assigned");
     }
@@ -122,7 +124,7 @@ const getTicket = asyncHandler(async (req, res) => {
         filter.priority = req.query.priority
     }
 
-    const tickets = await Ticket.find(filter)
+    const tickets = await Ticket.find(filter).sort({ createdAt: -1 })
         .populate("createdBy", "name email")
         .populate("assignedTo", "name email");
 
@@ -139,13 +141,13 @@ const singleTicket = asyncHandler(async (req, res) => {
     }
 
     const ticket = await Ticket.findById(id)
-      .populate("createdBy", "name email")
-    .populate("assignedTo", "name email");
-if (!ticket) {
-    throw new ApiError(400, "Ticket is required")
-}
+        .populate("createdBy", "name email")
+        .populate("assignedTo", "name email");
+    if (!ticket) {
+        throw new ApiError(400, "Ticket is required")
+    }
 
-return res.status(200).json(new ApiResponse(200, ticket, "ticket id fetched succussfully"));
+    return res.status(200).json(new ApiResponse(200, ticket, "ticket id fetched succussfully"));
 })
 
 export {
