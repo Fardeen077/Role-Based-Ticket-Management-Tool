@@ -11,7 +11,8 @@ const useAuthStore = create((set) => ({
     isAuth: false,
     isCheckingAuth: true,
     isLoading: true,
-    authUser: false,
+    isLoadingAgent: false,
+    authUser: null,
     error: null,
     authAgent: [],
 
@@ -53,14 +54,14 @@ const useAuthStore = create((set) => ({
         }
     },
     getAgentUsers: async () => {
-        set({ isLoading: true, error: null });
+        set({ isLoadingAgent: true, error: null });
         try {
             const res = await getAgentUsersApi();
-            set({ authAgent: res.data, isLoading: false });
+            set({ authAgent: res.data, isLoadingAgent: false });
             // console.log("store", res.data);
             return res?.data
         } catch (error) {
-            set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch" });
+            set({ isLoadingAgent: false, error: error?.response?.data?.message || "failed to fetch" });
             throw error;
         }
     },

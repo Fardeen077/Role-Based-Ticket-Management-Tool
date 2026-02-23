@@ -9,24 +9,25 @@ import DashboardLayout from "./components/DashboardLayout";
 import PublicRoute from "./components/PublicRoute";
 import useAuthStore from "./store/useAuthStore";
 import { useEffect } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function App() {
-  const { getUser } = useAuthStore();
-  // const isLoading = useAuthStore((s)=> s.isLoading)
+  const getUser = useAuthStore((s) => s.getUser);
+  const isLoading = useAuthStore((s)=> s.isLoading)
 
   useEffect(() => {
     getUser();
     // console.log("useEffect ran");
   }, [getUser]);
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="min-h-screen flex items-center justify-center">
-  //       <AiOutlineLoading3Quarters className="animate-spin text-5xl" />
-  //     </div>
-  //   )
-  // }
-// ticketdetail
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <AiOutlineLoading3Quarters className="animate-spin text-5xl" />
+      </div>
+    )
+  }
+  // ticketdetail
   return (
     <BrowserRouter>
       <Routes>
@@ -36,7 +37,7 @@ function App() {
           <Route element={<DashboardLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="/ticketsform" element={<TicketsForm />} />
-              <Route path="/ticketdetail/:id" element={<TicketDetail />} />
+            <Route path="/ticketdetail/:id" element={<TicketDetail />} />
           </Route>
         </Route>
 

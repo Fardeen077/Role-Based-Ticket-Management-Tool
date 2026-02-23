@@ -4,12 +4,15 @@ import { IoMdClose } from "react-icons/io";
 import useTicketStore from "../store/useTicketStore";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-// import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function AgentPopup({ ticketId, assignedTo }) {
-    const { getAgentUsers, authAgent } = useAuthStore();
+    // const { getAgentUsers, authAgent } = useAuthStore();
+    const getAgentUsers = useAuthStore((s) => s.getAgentUsers);
+    const authAgent = useAuthStore((s) => s.authAgent);
+    const isLoadingAgent = useAuthStore((s) => s.isLoadingAgent);
     const [open, setopen] = useState(false);
-    const { assignedTicket } = useTicketStore()
+    const assignedTicket = useTicketStore((s) => s.assignedTicket)
     const navigate = useNavigate()
 
 
@@ -22,7 +25,7 @@ function AgentPopup({ ticketId, assignedTo }) {
         try {
             if (authAgent.length === 0) {
                 await getAgentUsers();
-                // console.log(authAgent);
+                console.log(authAgent);
             }
             setopen(true);
         } catch (error) {
@@ -41,7 +44,7 @@ function AgentPopup({ ticketId, assignedTo }) {
             toast.success("Ticket Assigned successfully");
             navigate("/")
             // console.log("agent id", agentId, "ticket id", ticketId );
-            
+
             setopen(false)
         } catch (error) {
             toast.error(error?.response?.data?.message);
@@ -50,7 +53,7 @@ function AgentPopup({ ticketId, assignedTo }) {
 
     // console.log("from popup", authAgent);
 
-    // if (isLoading) {
+    // if (isLoadingAgent) {
     //     return (
     //         <div className="flex justify-center items-center h-40">
     //             <AiOutlineLoading3Quarters className="animate-spin text-4xl" />
@@ -60,7 +63,19 @@ function AgentPopup({ ticketId, assignedTo }) {
 
     return (
         <div className="text-white">
-            <button onClick={handlePopUp} className="w-full bg-black py-2 mt-5 hover:bg-zinc-950 cursor-pointer">Agent</button>
+            <button onClick={handlePopUp}
+                disabled={isLoadingAgent}
+                className="w-full bg-black py-2 mt-5 hover:bg-zinc-950 cursor-pointer">
+                {isLoadingAgent ? (
+                    <div>
+                        <AiOutlineLoading3Quarters className="h-5 w-5 animate-spin inline mr-3" />
+                        Agent...
+                    </div>
+                ) : (
+                    "Agents"
+                )}
+            </button>
+
             {open && (
                 <div className="absolute inset-0 bg-black/40 flex justify-center items-center">
                     <div className="bg-zinc-900 p-5 rounded w-80 relative">

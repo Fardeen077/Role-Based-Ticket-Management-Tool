@@ -1,14 +1,22 @@
 import useTicketStore from "../store/useTicketStore"
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+// import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useShallow } from "zustand/shallow";
 import { useNavigate } from "react-router-dom"
 import useAuthStore from "../store/useAuthStore";
 import { useEffect, useState } from "react";
 
 const TicketLists = () => {
-    const { tickets, getTicket } = useTicketStore();
+    const { tickets, getTicket, searchUser } = useTicketStore(useShallow((s) => ({
+        tickets: s.tickets,
+        getTicket: s.getTicket,
+        searchUser: s.searchUser,
+    })));
+    //     // const tickets = useTicketStore((s) => s.tickets);
+    // const getTicket = useTicketStore((s) => s.getTicket);
+    // const searchUser = useTicketStore((s) => s.searchUser);
+
     const authUser = useAuthStore((s) => s.authUser);
     const [query, setQueary] = useState("");
-    const { searchUser } = useTicketStore();
     const navigate = useNavigate();
 
     const [filter, setFilter] = useState({
