@@ -11,7 +11,7 @@ const TicketLists = () => {
         getTicket: s.getTicket,
         searchUser: s.searchUser,
     })));
-    //     // const tickets = useTicketStore((s) => s.tickets);
+    // const tickets = useTicketStore((s) => s.tickets);
     // const getTicket = useTicketStore((s) => s.getTicket);
     // const searchUser = useTicketStore((s) => s.searchUser);
 
@@ -53,10 +53,6 @@ const TicketLists = () => {
     }
     // console.log(tickets);
     // console.log(authUser);
-
-    // if (isLoading) return <AiOutlineLoading3Quarters className="animate-spin mr-2 text-gray-700 text-5xl" />
-    // console.log("tickets from ticket list:", tickets);
-
     return (
         <div className="text-white w-full">
             <div className="flex flex-col gap-2 md:mb-10 md:mt-2 md:justify-between md:flex-row md:items-center">

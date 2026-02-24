@@ -7,19 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function AgentPopup({ ticketId, assignedTo }) {
-    // const { getAgentUsers, authAgent } = useAuthStore();
     const getAgentUsers = useAuthStore((s) => s.getAgentUsers);
     const authAgent = useAuthStore((s) => s.authAgent);
     const isLoadingAgent = useAuthStore((s) => s.isLoadingAgent);
     const [open, setopen] = useState(false);
     const assignedTicket = useTicketStore((s) => s.assignedTicket)
     const navigate = useNavigate()
-
-
-    // useEffect(() => {
-    //     if (authAgent.length > 0) return
-    //     getAgentUsers();
-    // }, []);
 
     const handlePopUp = async () => {
         try {
@@ -49,18 +42,8 @@ function AgentPopup({ ticketId, assignedTo }) {
         } catch (error) {
             toast.error(error?.response?.data?.message);
         }
-    }
-
-    // console.log("from popup", authAgent);
-
-    // if (isLoadingAgent) {
-    //     return (
-    //         <div className="flex justify-center items-center h-40">
-    //             <AiOutlineLoading3Quarters className="animate-spin text-4xl" />
-    //         </div>
-    //     );
-    // }
-
+    };
+    
     return (
         <div className="text-white">
             <button onClick={handlePopUp}

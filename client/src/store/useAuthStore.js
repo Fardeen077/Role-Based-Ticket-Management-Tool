@@ -43,10 +43,11 @@ const useAuthStore = create((set) => ({
     },
 
     getUser: async () => {
-        set({ isLoading: true, error: null });
+        set({ isLoading: true, error: null , isCheckingAuth: true});
         try {
             const res = await getUserApi();
-            set({ isLoading: false, authUser: res.data, isAuth: true, isCheckingAuth: false })
+            set({ isLoading: false, authUser: res.data, isAuth: true, isCheckingAuth: false });
+            // console.log(isCheckingAuth.get());
             return res.data;
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "failed to fetch", isAuth: false, isCheckingAuth: false });

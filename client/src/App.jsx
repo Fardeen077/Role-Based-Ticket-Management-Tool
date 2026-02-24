@@ -10,10 +10,10 @@ import PublicRoute from "./components/PublicRoute";
 import useAuthStore from "./store/useAuthStore";
 import { useEffect } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-
+import NotFound from "./pages/NotFound";
 function App() {
   const getUser = useAuthStore((s) => s.getUser);
-  const isLoading = useAuthStore((s)=> s.isLoading)
+  const isLoading = useAuthStore((s) => s.isLoading)
 
   useEffect(() => {
     getUser();
@@ -23,7 +23,7 @@ function App() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <AiOutlineLoading3Quarters className="animate-spin text-5xl" />
+        <AiOutlineLoading3Quarters className="animate-spin text-5xl text-blue-600" />
       </div>
     )
   }
@@ -48,7 +48,7 @@ function App() {
         </Route>
 
         {/* FALLBACK */}
-        <Route path="*" element={<Login />} />
+        <Route path="*" element={< NotFound />} />
 
       </Routes>
     </BrowserRouter>

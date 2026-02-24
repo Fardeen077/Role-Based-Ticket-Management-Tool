@@ -12,7 +12,7 @@ import { create } from 'zustand';
 const initialState = {
     tickets: [],
     count: 0,
-    isLoading: true,
+    isLoading: false,
     error: null,
     ticketDetail: null,
 };
@@ -26,7 +26,7 @@ const useTicketStore = create((set) => ({
             const res = await createTicketApi(ticket);
             set((state) => ({
                 isLoading: false,
-                tickets: [res.data, ...state.data,]
+                tickets: [res.data, ...state.tickets,]
             }));
         } catch (error) {
             set({ isLoading: false, error: error?.response?.data?.message || "Create ticket failed" });
