@@ -88,7 +88,7 @@ const TicketLists = () => {
                                 <option value="">STATUS</option>
                                 <option value="OPEN">OPEN</option>
                                 <option value="IN_PROGRESS">IN PROGRESS</option>
-                                <option value="CLOSE">CLOSE</option>
+                                <option value="CLOSED">CLOSED</option>
                             </select>
                         </div>
                     </>
