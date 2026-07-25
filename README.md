@@ -77,15 +77,23 @@ the following credentials to test the admin features:
 
 > **Note:** These credentials are for demo/testing purposes only.
 
-## .env
+## 🔧 Environment Variables
+
+Create a `.env` file in the root directory and add the following variables:
+
+```env
 MONGODB_URL=
+
 PORT=
-CORE_ORIGIN=http:
+
+CORE_ORIGIN=http://localhost:5173
+
 JWT_ACCESS_SECRET=JSONWEBTOKEN_ACCESS_SECRET
-ACCESS_TOKEN_EXPIRED=
+ACCESS_TOKEN_EXPIRED=1d
+
 JWT_REFRESH_SECRET=JSONWEBTOKEN_REFRESH_SECRET
-REFRESH_TOKEN_EXPIRED=
-https://role-based-ticket-management-tool.onrender.com
+REFRESH_TOKEN_EXPIRED=7d
+```
 
 ## API Endpoints
 
