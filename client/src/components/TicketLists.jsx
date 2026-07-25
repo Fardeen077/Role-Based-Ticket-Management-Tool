@@ -117,7 +117,7 @@ const TicketLists = () => {
                                 <td className="px-4 py-2 border">{ticket.title.split("").slice(0, 25).join("")}</td>
                                 <td className="px-4 py-2 border cursor-pointer" onClick={() => handleDatileTicketpage(ticket._id)}>
                                     <span className="hover:text-blue-500 cursor-pointer underline max-w-75">
-                                        {ticket.description.split("").slice(0, 40).join("")}
+                                        {ticket.description.split("").slice(0, 36).join("")}
                                     </span></td>
                                 <td className="px-4 py-2 border">{ticket.status}</td>
                                 <td className="px-4 py-2 border">{ticket.priority}</td>

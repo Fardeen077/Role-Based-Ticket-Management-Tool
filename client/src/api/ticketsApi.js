@@ -23,10 +23,10 @@ const assignedTicketApi = async (ticketId, agentId) => {
     return res.data;
 }
 
-const updateStatusApi = async (id) => {
-    const res = await axiosInstance.patch(`/tickets/${id}/update-status`, id);
-    return res.data;
-}
+// const updateStatusApi = async (id) => {
+//     const res = await axiosInstance.patch(`/tickets/${id}/update-status`, {status});
+//     return res.data;
+// }
 
 const getTicketApi = async (filters) => {
     const res = await axiosInstance.get("/tickets/getTicket", {
@@ -42,7 +42,7 @@ const singleTicketApi = async (id) => {
 export {
     singleTicketApi,
     createTicketApi,
-    updateStatusApi,
+    // updateStatusApi,
     assignedTicketApi,
     getTicketApi,
     searchUserApi,

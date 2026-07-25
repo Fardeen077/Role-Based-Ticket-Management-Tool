@@ -18,7 +18,7 @@ router.post("/", verifyJwt, roles("USER"), validate, createTicket);
 router.get("/search-users", verifyJwt, roles("ADMIN"), searchUsers);
 router.patch("/:id/update-status", verifyJwt, roles("ADMIN", "AGENT"), updateTicketStatus);
 router.get("/getTicket", verifyJwt, roles("ADMIN", "AGENT", "USER"), getTicket);
-router.patch("/:ticketId/assigned", verifyJwt, roles("ADMIN"), assignedTicket); // i pass worng paramiter
-router.get("/:id", singleTicket)
+router.patch("/:ticketId/assigned", verifyJwt, roles("ADMIN"), assignedTicket);
+router.get("/:id",verifyJwt, singleTicket)
 
 export default router

@@ -3,10 +3,12 @@ import useTicketStore from "../store/useTicketStore"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ticketsValidation } from "../validations/ticketsValidation";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const TicketsForm = () => {
   const navigate = useNavigate();
-  const { createTicket } = useTicketStore();
+  const createTicket = useTicketStore((state) => state.createTicket);
+  const isLoading = useTicketStore((state) => state.isLoading);
   const [ticket, setTicket] = useState({
     title: "",
     description: "",
@@ -63,16 +65,22 @@ const TicketsForm = () => {
             <option value="HIGH">HIGH</option>
           </select>
 
-          <button
-            type="submit"
-            className="mt-2 bg-blue-600 hover:bg-blue-700 transition rounded-lg py-2 font-medium"
-          >
-            Submit Ticket
-          </button>
+          <button type="submit"
+          disabled={isLoading}
+          className="mt-2 bg-blue-600 hover:bg-blue-700 transition rounded-lg py-2 font-medium cursor-pointer">
+            {isLoading ? (
+              <>
+              <AiOutlineLoading3Quarters className="h-5 w-5 animate-spin inline mr-2" />
+            Creating Ticket...
+        </>
+        ) : (
+        "Submit Ticket"
+        )}
+      </button>
 
-        </form>
-      </div>
-    </div>
+    </form>
+      </div >
+    </div >
   );
 };
 
