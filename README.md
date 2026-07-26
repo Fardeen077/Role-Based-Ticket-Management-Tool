@@ -91,7 +91,7 @@ Use the following credentials to test the admin features.
 ### Admin Account
 
 - **Email:** admin@gmail.com
-- **Password:** Admin@786
+- **Password:** admin123
 
 > **Note:** These credentials are provided for demo purposes only.
 
